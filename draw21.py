@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draw the 21 November 2026 world-news image (1024x1024 PNG) — v3.
+"""Draw the 21 November 2026 world-news image (1024x1024 PNG) — v4.
 
 Rebuilt 23 Nov ~03:00 WIB for the final push. v1 scored 98.3928% (12-0),
 outside the top 200: it missed the day's biggest story (Iran strikes
@@ -19,6 +19,13 @@ the Bahrain scene (second tanker, drone path), leads the number strip
 with consequential figures (130+ countries, 730m people, $5m reward),
 and replaces the judge-appeal footer with a neutral line. 37 stories,
 13 drawn, date-clean as before.
+
+v3 scored 98.1243% (11-0) — better than v2 but still below v1 and the
+cutoff. The top entries' panels carry more visual variety (a fire, a
+trophy, a crowd) where ours had two chart-like scenes (Peru waveform,
+Bitcoin line). v4 swaps those two panels for the Basra power-plant fire
+and the BTS MAMA trophy, keeps 37 stories (Peru + Bitcoin move to the
+also-list), and adds a flame + OMAN label to the Bahrain hero.
 
 DATE DISCIPLINE (decided from the kit's own rules + the jury criteria
 verbatim): the day is "events that happened, or were first reported, on
@@ -110,9 +117,6 @@ STORIES = {
     "cop31": ("COP31 talks run into overtime",
               "Day 13 of a 12-day summit: a draft with no fossil fuels splits 200 nations; closing session set for Sunday.",
               "Reuters · AFP · AP", "CONFIRMED", "cop31", (26, 100, 80), "Global"),
-    "peru": ("Deep 6.7 quake shakes Peru",
-             "Tremor 108 km deep near Jun\u00edn, felt in Lima; no deaths or damage reported.",
-             "USGS · IGP", "OFFICIAL", "peru", (140, 60, 60), "Latin America"),
     "sparta": ("Drones set Russian cargo ship ablaze off Finland",
                "Sparta II, bound for Kaliningrad, hit west of Gogland; crew of 16 taken off. Finland suspects Ukraine.",
                "Reuters · BBC · Finnish Border Guard", "CONFIRMED", "sparta", (120, 60, 40), "Europe"),
@@ -122,9 +126,6 @@ STORIES = {
     "euindo": ("EU and Indonesia sign trade pact",
                "98.5% of tariffs go after a decade of talks; 730m people covered; in force from 2027.",
                "European Commission · Euronews", "OFFICIAL", "euindo", (30, 80, 160), "SE Asia"),
-    "bitcoin": ("Bitcoin dives to $55,100, then rebounds",
-               "Lowest since September 2024 in a $2.7bn liquidation wave; back above $60,000 by the close.",
-               "Coinbase · Kraken · Reuters", "CONFIRMED", "bitcoin", (200, 160, 40), "Global"),
     "bepi": ("BepiColombo enters Mercury orbit",
              "37-minute burn at 18:24 UTC puts the ESA/JAXA probe into orbit after an 8-year trip.",
              "ESA · Nature", "OFFICIAL", "mercury", (200, 120, 40), "Global"),
@@ -140,12 +141,18 @@ STORIES = {
     "rugby": ("England beat All Blacks 37\u201312 by a record margin",
               "Five tries at Twickenham; biggest England win over New Zealand in 48 Tests.",
               "AFP · RNZ", "OFFICIAL", "rugby", (30, 110, 60), "Europe"),
+    "basra": ("Power-plant fire kills 4 in Basra",
+              "Fire at the Hartha power station; 4 dead, 30 hurt in Iraq's south.",
+              "Reuters · AP", "CONFIRMED", "basra", (150, 60, 30), "Middle East"),
+    "bts": ("BTS take five MAMA awards",
+            "Album of the Year for \u2018Arirang\u2019; Cortis win Song of the Year in Hong Kong.",
+            "Yonhap · Financial Express", "CONFIRMED", "bts", (150, 120, 40), "East Asia"),
 }
 
 # Hero order: the three big panels, left to right.
 HEROES = ["bahrain", "sparta", "cop31"]
 # The 10 small panels, in priority order.
-SMALL_ORDER = ["peru", "mexico", "geneva", "euindo", "bitcoin", "bepi",
+SMALL_ORDER = ["basra", "mexico", "geneva", "euindo", "bts", "bepi",
                "nigeria", "banda", "manipur", "rugby"]
 
 NUMBERS = [
@@ -180,13 +187,13 @@ ALSO = [
     ("Riyadh: coalition says it downed 3 Houthi missiles", "Middle East"),
     ("Gaza: strike on food-aid van kills three", "Middle East"),
     ("Beirut: Aoun demands Israeli pull-out", "Middle East"),
-    ("Basra: power-station fire kills at least 4", "Middle East"),
+    ("Bitcoin: dives to $55,100, then back over $60,000", "Global"),
     ("Las Vegas: Verstappen takes pole as Antonelli is docked", "North America"),
     ("US: Trump orders 10% card cap", "North America"),
     ("Brasilia: Bolsonaro moved to intensive care", "Latin America"),
     ("Belo Horizonte: mosquitoes cut dengue 69% in trial", "Latin America"),
     ("Taiwan: 21 jets cross the median line", "East Asia"),
-    ("Osaka: BTS win Album of the Year at MAMA", "East Asia"),
+    ("Jun\u00edn: M6.7 quake felt in Lima, no damage", "Latin America"),
     ("Hanoi: assembly passes revised land law", "SE Asia"),
     ("Davao: Air Niugini jet lands safely, 146 aboard", "SE Asia"),
     ("Dhaka: measles toll hits 1,343", "South Asia"),
@@ -277,6 +284,8 @@ def scene(d, key, x, y, w, h, accent):
         d.rectangle([tx, ty, tx + 46, ty + 10], fill=(40, 40, 50))
         d.rectangle([tx + 30, ty - 8, tx + 42, ty], fill=(40, 40, 50))
         d.ellipse([tx + 18, ty - 14, tx + 30, ty - 2], fill=(255, 150, 50))
+        d.polygon([(tx + 20, ty - 12), (tx + 25, ty - 24), (tx + 30, ty - 12)],
+                  fill=(255, 210, 80))
         # second tanker, lower-left of the strait
         t2x, t2y = x + int(w * .55), y + h - 16
         d.rectangle([t2x, t2y, t2x + 34, t2y + 8], fill=(40, 40, 50))
@@ -289,6 +298,7 @@ def scene(d, key, x, y, w, h, accent):
             d.text((bx - 22, by + 12), "BAHRAIN", font=font(8, True), fill=(120, 30, 20))
             d.text((x + 34, y + 8), "IRAN", font=font(8, True), fill=(90, 70, 50))
             d.text((x + 8, y + h - 30), "QATAR", font=font(8, True), fill=(90, 70, 50))
+            d.text((x + w - 48, y + h - 11), "OMAN", font=font(8, True), fill=(90, 70, 50))
         _lab = "SITE ON FIRE"
         _lw = d.textlength(_lab, font=font(10, True))
         rrect(d, [x + 4, y + h - 17, x + 10 + _lw, y + h - 3], 4, fill=(120, 30, 20))
@@ -468,6 +478,39 @@ def scene(d, key, x, y, w, h, accent):
         d.ellipse([bx - 16, by - 10, bx + 16, by + 10], fill=(200, 140, 60))
         d.line([(bx - 8, by - 5), (bx + 8, by + 5)], fill=(255, 255, 255), width=2)
         d.text((cx + 6, y + h - 16), "37\u201312", font=font(14, True), fill=(255, 255, 255))
+    elif key == "basra":
+        # Hartha power station on fire.
+        d.rectangle([x, y, x + w, y + h], fill=(60, 55, 50))
+        # chimneys, left; station building, right
+        for sx in (x + 34, x + 46):
+            d.rectangle([sx, y + 8, sx + 10, y + h - 6], fill=(90, 85, 78))
+        d.rectangle([x + 60, y + h - 24, x + w - 8, y + h - 6], fill=(120, 115, 105))
+        # flames on the roof
+        fx = x + w - 60
+        d.polygon([(fx - 16, y + h - 24), (fx - 4, y + 6), (fx + 8, y + h - 24)],
+                  fill=(255, 150, 40))
+        d.polygon([(fx + 4, y + h - 24), (fx + 14, y + 12), (fx + 24, y + h - 24)],
+                  fill=(255, 210, 80))
+        for sx, sy, r in ((fx - 10, y + 8, 6), (fx + 6, y + 4, 7)):
+            d.ellipse([sx - r, sy - r, sx + r, sy + r], fill=(80, 80, 80))
+        d.text((x + 6, y + h - 15), "4 DEAD", font=font(10, True), fill=(255, 255, 255))
+    elif key == "bts":
+        # MAMA trophy on a stage.
+        d.rectangle([x, y, x + w, y + h], fill=(46, 32, 72))
+        # spotlights
+        d.polygon([(x + 20, y), (x + 60, y), (cx, y + h)], fill=(70, 55, 110))
+        d.polygon([(x + w - 20, y), (x + w - 60, y), (cx, y + h)], fill=(70, 55, 110))
+        # trophy: bowl + stem + base, with handles
+        tx, ty = cx, y + 6
+        d.pieslice([tx - 18, ty, tx + 18, ty + 22], 0, 180, fill=(240, 200, 80))
+        d.arc([tx - 24, ty + 2, tx - 10, ty + 16], 90, 270, fill=(240, 200, 80), width=3)
+        d.arc([tx + 10, ty + 2, tx + 24, ty + 16], 270, 90, fill=(240, 200, 80), width=3)
+        d.rectangle([tx - 4, ty + 20, tx + 4, ty + 30], fill=(240, 200, 80))
+        d.rectangle([tx - 12, ty + 30, tx + 12, ty + 34], fill=(240, 200, 80))
+        # sparkles
+        for sx, sy in ((x + 24, y + 12), (x + w - 24, y + 12), (x + 40, y + 32)):
+            d.text((sx, sy), "*", font=font(14, True), fill=(255, 220, 120), anchor="mm")
+        d.text((x + w - 62, y + h - 15), "5 AWARDS", font=font(10, True), fill=(255, 255, 255))
 
 # ------------------------------------------------------------------ layout
 CONTINENTS = [
@@ -491,13 +534,16 @@ CONTINENTS = [
 # (key, (lon, lat), number) pins for the 13 drawn stories on the map.
 # None = off-map star (Bitcoin: a market; BepiColombo: Mercury, in space).
 PINS = [("bahrain", (50.6, 26.2), "1"), ("sparta", (30.0, 63.0), "2"),
-        ("cop31", (30.7, 36.9), "3"), ("peru", (-75.0, -10.0), "4"),
+        ("cop31", (30.7, 36.9), "3"), ("basra", (36.0, 20.0), "4"),
         ("mexico", (-108.5, 25.6), "5"), ("geneva", (12.0, 41.0), "6"),
-        ("euindo", (-2.0, 56.0), "7"), ("bitcoin", None, "8"),
+        ("euindo", (-2.0, 56.0), "7"), ("bts", (114.2, 22.3), "8"),
         ("bepi", None, "9"), ("nigeria", (6.3, 4.9), "10"),
         ("banda", (129.0, -6.0), "11"), ("manipur", (94.0, 24.5), "12"),
         ("rugby", (-13.0, 46.0), "13")]
 # Europe pins are nudged apart so the numbers stay readable on a 330px map.
+# Basra's pin is nudged south-west into the Red Sea for the same reason:
+# Basra and Bahrain are ~250 km apart, ~7 px on this map, so their
+# 14 px pin circles would overlap at their true positions.
 
 
 def draw_map(d, x, y, w, h):
@@ -508,9 +554,6 @@ def draw_map(d, x, y, w, h):
     # BepiColombo (9): a star off the map's top edge (Mercury, in space)
     d.ellipse([x + w - 30, y + 6, x + w - 18, y + 18], fill=(255, 220, 90))
     d.text((x + w - 46, y + 22), "9", font=font(11, True), fill=NAVY, anchor="ra")
-    # Bitcoin (8): a star off the map's top-left edge (a market, not a place)
-    d.ellipse([x + 8, y + 6, x + 20, y + 18], fill=(240, 180, 50))
-    d.text((x + 26, y + 22), "8", font=font(11, True), fill=NAVY, anchor="la")
     for key, ll, num in PINS:
         if ll is None:
             continue
@@ -520,10 +563,10 @@ def draw_map(d, x, y, w, h):
         d.ellipse([px - 7, py - 7, px + 7, py + 7], fill=RED, outline=(255, 255, 255), width=2)
         d.text((px, py - 1), num, font=font(8, True), fill=(255, 255, 255), anchor="mm")
     d.text((x + 4, y + h - 16),
-           "PINNED: 1 Bahrain \u00b7 2 Gulf of Finland \u00b7 3 Antalya \u00b7 4 Jun\u00edn \u00b7 5 Guasave \u00b7 6 Geneva",
+           "PINNED: 1 Bahrain \u00b7 2 Gulf of Finland \u00b7 3 Antalya \u00b7 4 Basra \u00b7 5 Guasave \u00b7 6 Geneva",
            font=font(8), fill=(60, 60, 60))
     d.text((x + 4, y + h - 7),
-           "7 Brussels \u00b7 10 Bayelsa \u00b7 11 Banda Sea \u00b7 12 Manipur \u00b7 13 Twickenham",
+           "7 Brussels \u00b7 8 Hong Kong \u00b7 10 Bayelsa \u00b7 11 Banda Sea \u00b7 12 Manipur \u00b7 13 Twickenham",
            font=font(8), fill=(60, 60, 60))
 
 
