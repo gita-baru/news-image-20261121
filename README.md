@@ -4,7 +4,7 @@
 [![rank](https://make.fun/badge/news-image-20261121/gita-baru/news-image-20261121/rank.svg)](https://make.fun/bounty/news-image-20261121)
 [![reward](https://make.fun/badge/news-image-20261121/gita-baru/news-image-20261121/reward.svg)](https://make.fun/bounty/news-image-20261121)
 
-One image summing up Saturday 21 November 2026: 39 stories, 7 regions, 13 drawn panels (v6 — v1's cleaner template, 39 stories).
+One image summing up Saturday 21 November 2026: 38 stories, 7 regions, 13 drawn panels (v7 — v1's cleaner template, 38 stories).
 
 - **Hero:** Iran strikes Bahrain as tankers hit in Hormuz; drones set Russian cargo ship Sparta II ablaze off Finland; COP31 runs into overtime.
 - **Also:** Basra power-plant fire kills 4; Mexico captures 'El Chapo Isidro'; BTS take five MAMA awards; EU–Indonesia trade pact; BepiColombo enters Mercury orbit; Nigeria boat toll reaches 24; M6.8 Banda Sea quake; Manipur alcohol deaths; England beat the All Blacks 37–12.

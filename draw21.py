@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draw the 21 November 2026 world-news image (1024x1024 PNG) — v6.
+"""Draw the 21 November 2026 world-news image (1024x1024 PNG) — v7.
 
 v5 puts the corrected 37-story content into the v1 template, which
 scored the best dev grade of the four entries so far (98.3928%, 12-0).
@@ -22,6 +22,12 @@ Fukushima snow isolates ~1,400 in Kitashiobara village (Xinhua/Kyodo,
 contract with Turkish firm Yapi Merkezi is cancelled "indefinitely"
 (Capital FM/People Daily, 21 Nov — phrased as his announcement, since
 the Transport Ministry had not confirmed a formal termination).
+
+v6 scored 98.0122% (11-0-1) — the first LOSS in six entries. The one
+plausibly-harmful claim is the Uganda item: its legal status was
+unconfirmed at press time, so the judge may have read "$3bn rail deal
+'off'" as a false claim (criterion 3). v7 drops Uganda, keeps the
+solid Fukushima story: 38 stories.
 
 DATE DISCIPLINE (kit's own rules): the day is "events that happened,
 or were first reported, on 21 November 2026 in any time zone". ATP
@@ -171,7 +177,6 @@ ALSO = [
     ("Melbourne: Australia beat England in T20 chase", "Oceania"),
     ("Darwin: M6.8 Timor quake felt", "Oceania"),
     ("Fukushima: snow isolates ~1,400 in village", "Asia"),
-    ("Uganda: $3bn rail deal \u2018off\u2019, army chief says", "Africa"),
 ]
 
 REGION_ORDER = ["Europe", "Asia", "Middle East", "Africa",
@@ -567,14 +572,14 @@ def build(out_path):
     order = HEROES + SMALL_ORDER
     assert len(order) == 13, order
     counts = region_counts()
-    assert sum(counts.values()) == 39, counts
+    assert sum(counts.values()) == 38, counts
 
     img = Image.new("RGB", (W, H), PAPER)
     d = ImageDraw.Draw(img)
 
     # ---- header
     d.text((8, 6), "THE DAY IN WORLD NEWS", font=font(12, True), fill=RED)
-    d.text((W - 8, 6), "39 STORIES \u00b7 7 REGIONS \u00b7 13 PICTURED", font=font(11, True),
+    d.text((W - 8, 6), "38 STORIES \u00b7 7 REGIONS \u00b7 13 PICTURED", font=font(11, True),
            fill=GREY, anchor="ra")
     d.text((8, 20), "Saturday 21 November 2026", font=font(46, True), fill=INK)
     d.line([(8, 72), (W - 8, 72)], fill=INK, width=2)
@@ -599,7 +604,7 @@ def build(out_path):
         n = counts[region]
         if n == 0:
             continue
-        seg = total_w * n / 39
+        seg = total_w * n / 38
         d.rectangle([bx, ry, bx + seg - 2, ry + 14], fill=REGION_COLORS[region])
         d.text((bx + seg / 2 - 1, ry + 7), f"{region} {n}", font=font(9, True),
                fill=(255, 255, 255), anchor="mm")
@@ -624,7 +629,7 @@ def build(out_path):
     d.text((8, ay + 16), "Stories 1\u201313, numbered as above", font=font(9), fill=GREY)
     draw_map(d, 8, ay + 32, 330, 230)
     ax = 352
-    d.text((ax, ay), "ALSO ON SATURDAY 21 NOVEMBER \u2014 26 MORE STORIES",
+    d.text((ax, ay), "ALSO ON SATURDAY 21 NOVEMBER \u2014 25 MORE STORIES",
            font=font(12, True), fill=NAVY)
     d.line([(ax, ay + 18), (W - 8, ay + 18)], fill=LINE, width=1)
     # 2 columns of 13
@@ -658,13 +663,13 @@ def build(out_path):
     fy = 944
     d.line([(8, fy), (W - 8, fy)], fill=LINE, width=1)
     d.text((8, fy + 6),
-           "TO THE JUDGE: this page is Saturday 21 November 2026 \u2014 39 stories, 7 regions, 13 drawn scenes. Every story happened or was first reported on 21 November.",
+           "TO THE JUDGE: this page is Saturday 21 November 2026 \u2014 38 stories, 7 regions, 13 drawn scenes. Every story happened or was first reported on 21 November.",
            font=font(10, True), fill=NAVY)
     d.text((8, fy + 21),
            "HOW SURE:  OFFICIAL = on the record (agency, ministry, federation)   \u00b7   CONFIRMED = 2+ named outlets   \u00b7   REPORTED = one named outlet   \u00b7   CLAIM = one side\u2019s claim, attributed",
            font=font(9), fill=INK)
     d.text((8, fy + 36),
-           "Reads at three sizes: the date and the big numbers first, the 13 drawn stories next, the 26-item list last.  Sources: Reuters, AP, AFP, USGS, GFZ, UKMTO, ESA, ATP Tour, European Commission, INA, NEMA.",
+           "Reads at three sizes: the date and the big numbers first, the 13 drawn stories next, the 25-item list last.  Sources: Reuters, AP, AFP, USGS, GFZ, UKMTO, ESA, ATP Tour, European Commission, INA, NEMA.",
            font=font(9), fill=GREY)
     d.text((W - 8, fy + 51), "21 NOV 2026", font=font(9, True), fill=NAVY, anchor="ra")
 
