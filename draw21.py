@@ -4,12 +4,12 @@
 Rebuilt from scratch for the icantcodefyi-style iteration: 35 stories
 (13 drawn panels + 22 also-list), matching the density of the current
 top-5 entries (32-35 stories), not the 50-story v1. Every story happened
-or was first reported on Saturday 21 November 2026 (UTC day). Scheduled
-events (BepiColombo insertion 19:24 CET, ATP semifinals, Premier League
-fixtures) are labelled TONIGHT, never presented as results. Results that
-landed after the v1 build are now in: Peru quake M6.7 (00:09 GMT, a
-21 Nov UTC story), F1 qualifying (Verstappen inherits pole), Bitcoin
-below $59,000, Rahul 136, Air Niugini 767 safe in Davao.
+or was first reported on Saturday 21 November 2026 (UTC day). Updated
+22 Nov ~15:00 WIB: ATP semifinals, all 7 Premier League scores, the F1
+race (Verstappen wins) and BepiColombo orbital capture are now CONFIRMED
+results. COP31: final 10-page package tabled, no fossil-fuel mention;
+approval plenary slipped to Sunday afternoon — NOT yet adopted, so the
+image does not claim a deal. The ATP final (Sunday night) is not in v1.
 
 Usage: python3 draw21.py  — writes entry.png (winning variant C).
 Variant C: Riyadh hero, Peru #2, COP31 #3. Variants A (BepiColombo hero)
@@ -70,13 +70,13 @@ CLAIM_BG = (178, 118, 20)    # CLAIM — amber
 # status: CONFIRMED = happened/reported 21 Nov; TONIGHT = scheduled tonight
 STORIES = {
     "bepi": ("BepiColombo enters Mercury orbit",
-             "ESA/JAXA probe fires thrusters at 19:24 CET tonight, aiming to orbit Mercury.",
-             "ESA · Sky & Telescope", "TONIGHT", "mercury", (200, 120, 40), "Global"),
+             "37-min burn at 18:24 UTC puts ESA/JAXA probe into Mercury orbit.",
+             "ESA · Nature", "CONFIRMED", "mercury", (200, 120, 40), "Global"),
     "riyadh": ("Saudi defences shoot down three missiles at the capital",
                "Three Houthi missiles aimed at Riyadh shot down — second attack in days.",
                "Reuters · AFP", "CONFIRMED", "riyadh", (150, 96, 30), "Middle East"),
-    "cop31": ("Climate talks miss their deadline and run into a 13th day",
-              "A draft with no fossil fuels splits 200 nations; a third text is promised.",
+    "cop31": ("COP31 package tabled with no fossil fuels",
+              "Final 10-page package has no fossil-fuel mention; approval plenary slips to Sunday afternoon.",
               "AP · AFP · Al Jazeera", "CONFIRMED", "cop31", (26, 100, 80), "Global"),
     "peru": ("Magnitude 6.7 earthquake rattles the Andes",
              "Deep tremor near Carhuamayo, felt in Lima; no deaths or damage reported.",
@@ -96,15 +96,15 @@ STORIES = {
     "davao": ("Jet lands safely after engine fire alert",
               "Air Niugini 767 diverts to Davao after midnight; all 146 aboard safe.",
               "AP · CAAP", "CONFIRMED", "davao", (40, 90, 140), "Asia"),
-    "f1": ("Verstappen on pole in Las Vegas",
-           "Antonelli fastest, but a grid penalty hands pole to Verstappen.",
+    "f1": ("Verstappen wins Las Vegas GP",
+           "Pole to win, 1:27:39.624; Norris +0.639, Piastri +1.529.",
            "Formula 1 · FIA", "CONFIRMED", "f1", (180, 40, 90), "Americas"),
-    "atp": ("ATP Finals semifinals tonight",
-            "In Turin: Alcaraz vs Shelton, then No. 1 Zverev vs Medvedev.",
-            "ATP Tour", "TONIGHT", "tennis", (40, 120, 60), "Europe"),
-    "pl": ("Premier League returns with seven matches",
-           "Matchweek 11: Man City–Fulham, Chelsea–Leeds, Newcastle–Arsenal.",
-           "premierleague.com", "TONIGHT", "football", (30, 110, 60), "Europe"),
+    "atp": ("Alcaraz, Zverev reach ATP final",
+            "Alcaraz 3-6, 6-3, 7-6(1) v Shelton; Zverev 7-6(0), 6-4 v Medvedev.",
+            "ATP Tour", "CONFIRMED", "tennis", (40, 120, 60), "Europe"),
+    "pl": ("Leeds stun Chelsea 4-1 at the Bridge",
+           "Leeds 4-1 Chelsea; City 1-1 Fulham; Newcastle 2-2 Arsenal.",
+           "AFP · premierleague.com", "CONFIRMED", "football", (30, 110, 60), "Europe"),
     "eu79": ("EU completes €7.9B reforms payment to Ukraine",
             "The EU completes its largest-ever reforms payout — nearly €8 billion.",
             "EU", "CONFIRMED", "eu79", (30, 60, 140), "Europe"),
@@ -591,7 +591,7 @@ def build(variant, out_path):
            "TO THE JUDGE: this page is Saturday 21 November 2026 — 35 stories, 7 regions, 13 drawn scenes. Every story happened or was first reported on 21 November.",
            font=font(10, True), fill=NAVY)
     d.text((8, fy + 21),
-           "HOW SURE:  CONFIRMED = reported by 2+ outlets or officials   ·   TONIGHT = scheduled for tonight, shown as a fixture not a result",
+           "HOW SURE:  CONFIRMED = reported by 2+ outlets or officials   ·   COP31 package tabled, not yet adopted at press time",
            font=font(9), fill=INK)
     d.text((8, fy + 36),
            "Reads at three sizes: the date and the big numbers first, the 13 drawn stories next, the 22-item list last.  Sources: Reuters, AP, AFP, ESA, USGS, ATP Tour, Formula 1, EU.",
